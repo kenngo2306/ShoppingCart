@@ -29,7 +29,7 @@
 	      <ul class="nav navbar-nav">
 	      	<li><a href="AllProduct">Product List</a></li>
 	      	<li>
-	      		<a href="ShoppingCart">Shopping Cart</a></li>
+	      		<a href="ShoppingCart"><span class="glyphicon glyphicon-shopping-cart"></span> <span class="badge">${numItems}</span></a></li>
 	      </ul>
 	    </div>
 	  </div>

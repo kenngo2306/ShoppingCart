@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.Shoplineitem;
 import db.DBLineItem;
@@ -77,6 +78,9 @@ public class ShoppingCart extends HttpServlet {
 		lineData +="</tr>";
 		lineData +="</table>";
 		request.setAttribute("lineData", lineData);
+		long numItems = DBLineItem.getCount();
+		HttpSession session = request.getSession();
+		session.setAttribute("numItems", numItems);
 		getServletContext().getRequestDispatcher("/ShoppingCart.jsp").forward(request, response);
 	}
 

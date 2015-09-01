@@ -8,8 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.Shopproduct;
+import db.DBLineItem;
 import db.DBProduct;
 
 /**
@@ -74,6 +76,9 @@ public class AllProduct extends HttpServlet {
 		}
 		productData += "</table>";
 		request.setAttribute("productData", productData);
+		long numItems = DBLineItem.getCount();
+		HttpSession session = request.getSession();
+		session.setAttribute("numItems", numItems);
 		getServletContext().getRequestDispatcher("/ProductList.jsp").forward(request, response);
 	}
 

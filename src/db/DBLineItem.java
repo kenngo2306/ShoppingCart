@@ -15,7 +15,7 @@ public class DBLineItem
 	public static long getCount()
 	{
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
-		String queryStr = "SELECT COUNT(p.productName) FROM Shopproduct p ORDER BY p.productName";
+		String queryStr = "SELECT COUNT(l.lineItemId) FROM Shoplineitem l";
 		long count = 0;
 		try
 		{
