@@ -52,7 +52,7 @@ public class Detail extends HttpServlet {
 		productData += "<p>";
 		productData += product.getPrice();
 		productData += "</p>";
-		productData += "<img src='"+ product.getImageLink() +"'/>";
+		productData += "<img src='"+ product.getImageLink() +"' class='img-rounded' width='304' height='236'/>";
 		productData += "</div>";
 		
 		request.setAttribute("productData", productData);

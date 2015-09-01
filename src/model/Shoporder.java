@@ -1,0 +1,109 @@
+package model;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+
+
+/**
+ * The persistent class for the SHOPORDER database table.
+ * 
+ */
+@Entity
+@NamedQuery(name="Shoporder.findAll", query="SELECT s FROM Shoporder s")
+public class Shoporder implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@SequenceGenerator(name="SHOPORDER_ORDERID_GENERATOR", sequenceName="SEQ_SHOPORDER")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SHOPORDER_ORDERID_GENERATOR")
+	@Column(name="ORDER_ID")
+	private long orderId;
+
+	@Temporal(TemporalType.DATE)
+	@Column(name="ORDER_DATE")
+	private Date orderDate;
+
+	@Column(name="ORDER_STATUS")
+	private String orderStatus;
+
+	@Column(name="ORDER_TOTAL")
+	private BigDecimal orderTotal;
+
+	//bi-directional many-to-one association to Shoplineitem
+	@OneToMany(mappedBy="shoporder")
+	private List<Shoplineitem> shoplineitems;
+
+	//bi-directional many-to-one association to Shopuser
+	@ManyToOne
+	@JoinColumn(name="USER_ID")
+	private Shopuser shopuser;
+
+	public Shoporder() {
+	}
+
+	public long getOrderId() {
+		return this.orderId;
+	}
+
+	public void setOrderId(long orderId) {
+		this.orderId = orderId;
+	}
+
+	public Date getOrderDate() {
+		return this.orderDate;
+	}
+
+	public void setOrderDate(Date orderDate) {
+		this.orderDate = orderDate;
+	}
+
+	public String getOrderStatus() {
+		return this.orderStatus;
+	}
+
+	public void setOrderStatus(String orderStatus) {
+		this.orderStatus = orderStatus;
+	}
+
+	public BigDecimal getOrderTotal() {
+		return this.orderTotal;
+	}
+
+	public void setOrderTotal(BigDecimal orderTotal) {
+		this.orderTotal = orderTotal;
+	}
+
+	public List<Shoplineitem> getShoplineitems() {
+		return this.shoplineitems;
+	}
+
+	public void setShoplineitems(List<Shoplineitem> shoplineitems) {
+		this.shoplineitems = shoplineitems;
+	}
+
+	public Shoplineitem addShoplineitem(Shoplineitem shoplineitem) {
+		getShoplineitems().add(shoplineitem);
+		shoplineitem.setShoporder(this);
+
+		return shoplineitem;
+	}
+
+	public Shoplineitem removeShoplineitem(Shoplineitem shoplineitem) {
+		getShoplineitems().remove(shoplineitem);
+		shoplineitem.setShoporder(null);
+
+		return shoplineitem;
+	}
+
+	public Shopuser getShopuser() {
+		return this.shopuser;
+	}
+
+	public void setShopuser(Shopuser shopuser) {
+		this.shopuser = shopuser;
+	}
+
+}

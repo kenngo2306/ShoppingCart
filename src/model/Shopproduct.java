@@ -11,7 +11,6 @@ import java.util.List;
  * 
  */
 @Entity
-@Table (name="SHOPPRODUCT", schema="TESTDB")
 @NamedQuery(name="Shopproduct.findAll", query="SELECT s FROM Shopproduct s")
 public class Shopproduct implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -25,7 +24,7 @@ public class Shopproduct implements Serializable {
 	@Column(name="IMAGE_LINK")
 	private String imageLink;
 
-	private double price;
+	private BigDecimal price;
 
 	@Column(name="PRODUCT_DESCRIPTION")
 	private String productDescription;
@@ -39,6 +38,10 @@ public class Shopproduct implements Serializable {
 	//bi-directional many-to-one association to Shoplineitem
 	@OneToMany(mappedBy="shopproduct")
 	private List<Shoplineitem> shoplineitems;
+
+	//bi-directional many-to-one association to Shopreview
+	@OneToMany(mappedBy="shopproduct")
+	private List<Shopreview> shopreviews;
 
 	public Shopproduct() {
 	}
@@ -59,11 +62,11 @@ public class Shopproduct implements Serializable {
 		this.imageLink = imageLink;
 	}
 
-	public double getPrice() {
+	public BigDecimal getPrice() {
 		return this.price;
 	}
 
-	public void setPrice(double price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 
@@ -111,6 +114,28 @@ public class Shopproduct implements Serializable {
 		shoplineitem.setShopproduct(null);
 
 		return shoplineitem;
+	}
+
+	public List<Shopreview> getShopreviews() {
+		return this.shopreviews;
+	}
+
+	public void setShopreviews(List<Shopreview> shopreviews) {
+		this.shopreviews = shopreviews;
+	}
+
+	public Shopreview addShopreview(Shopreview shopreview) {
+		getShopreviews().add(shopreview);
+		shopreview.setShopproduct(this);
+
+		return shopreview;
+	}
+
+	public Shopreview removeShopreview(Shopreview shopreview) {
+		getShopreviews().remove(shopreview);
+		shopreview.setShopproduct(null);
+
+		return shopreview;
 	}
 
 }
