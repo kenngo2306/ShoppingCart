@@ -1,7 +1,11 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import db.DBOrder;
+
 import java.util.List;
 
 
@@ -16,7 +20,7 @@ public class Shopuser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="SHOPUSER_USERID_GENERATOR", sequenceName="SEQ_SHOPUSER" , schema="TESTDB", allocationSize = 1)
+	@SequenceGenerator(name="SHOPUSER_USERID_GENERATOR", sequenceName="SEQ_SHOPUSER" , schema="TESTDB", allocationSize = 1, initialValue = 3)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SHOPUSER_USERID_GENERATOR")
 	@Column(name="USER_ID")
 	private long userId;
@@ -31,6 +35,9 @@ public class Shopuser implements Serializable {
 
 	@Column(name="USER_ROLE")
 	private String userRole;
+	
+	@Column(name="USER_PASSWORD")
+	private String userPassword;
 
 	//bi-directional many-to-one association to Shoporder
 	@OneToMany(mappedBy="shopuser")
@@ -125,6 +132,46 @@ public class Shopuser implements Serializable {
 		shopreview.setShopuser(null);
 
 		return shopreview;
+	}
+
+	public String getUserPassword()
+	{
+		return userPassword;
+	}
+
+	public void setUserPassword(String userPassword)
+	{
+		this.userPassword = userPassword;
+	}
+	
+	public boolean hasActiveOrder()
+	{
+		
+		long orderId = DBOrder.getActiveOrderId(this);
+		System.out.println("orderId = " + orderId);
+		if (orderId > 0) 
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	public Shoporder getActiveOrder()
+	{
+		long orderId = DBOrder.getActiveOrderId(this);
+		
+		return DBOrder.getOrder(orderId);
+	}
+	
+	public long getNumItems()
+	{
+		long orderId = DBOrder.getActiveOrderId(this);
+		Shoporder  order = DBOrder.getOrder(orderId);
+		List<Shoplineitem> lineItems = order.getShoplineitems();
+		return lineItems.size();
 	}
 
 }

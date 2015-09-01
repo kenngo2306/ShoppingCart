@@ -39,7 +39,7 @@ CREATE TABLE ShopUser
   email VARCHAR(100),
   user_role VARCHAR(1)
 );
-
+ALTER TABLE ShopUser ADD user_password VARCHAR(50);
 CREATE SEQUENCE SEQ_SHOPUSER;
 
 CREATE TABLE ShopOrder 

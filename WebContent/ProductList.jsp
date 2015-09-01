@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,23 +18,41 @@
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/additional-methods.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/additional-methods.min.js"></script>
+<style>
+	.item
+	{
+		padding:20px;
+		margin-top:20px;
+		border: 1px solid black;
+		height: 250px;
+	}
+	img
+	{
+		margin:auto; 
+		width:200px;
+		display:block;
+		float:right;
+	}
+</style>
 <title>Product List</title>
+
 </head>
 <body>
-	<nav class="navbar navbar-inverse">
-	  <div class="container-fluid">
-	    <div class="navbar-header">
-	      <a class="navbar-brand">Shopping Cart!</a>
-	    </div>
-	    <div>
-	      <ul class="nav navbar-nav">
-	      	<li><a href="AllProduct">Product List</a></li>
-	      	<li>
-	      		<a href="ShoppingCart"><span class="glyphicon glyphicon-shopping-cart"></span> <span class="badge">${numItems}</span></a></li>
-	      </ul>
-	    </div>
-	  </div>
-	</nav>
-	${productData}
+	<jsp:include page="./header.jsp"/>
+	
+	<c:forEach var="product" items="${products}">
+		<div class="row col-sm-6 col-sm-offset-3">
+		  <div class="item ">
+				<div class="col-sm-5">
+					<h2>${product.productName}</h2>
+					<p>${product.productDescription}</p>
+					<p>$ ${product.price}</p>
+				</div>
+				<div class="col-sm-5 col-offset-5">
+					<img src="${product.imageLink}" alt="${product.productName}" width=319 height=200/>
+				</div>
+		  </div>
+		</div>
+	</c:forEach>
 </body>
 </html>
