@@ -1,8 +1,10 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
-import java.math.BigDecimal;
+
+
 import java.util.List;
 
 
@@ -11,12 +13,13 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="SHOPPRODUCT", schema="TESTDB")
 @NamedQuery(name="Shopproduct.findAll", query="SELECT s FROM Shopproduct s")
 public class Shopproduct implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="SHOPPRODUCT_PRODUCTID_GENERATOR", sequenceName="SEQ_SHOPPRODUCT")
+	@SequenceGenerator(name="SHOPPRODUCT_PRODUCTID_GENERATOR", sequenceName="SEQ_SHOPPRODUCT" , schema="TESTDB", allocationSize = 1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SHOPPRODUCT_PRODUCTID_GENERATOR")
 	@Column(name="PRODUCT_ID")
 	private long productId;
@@ -24,7 +27,7 @@ public class Shopproduct implements Serializable {
 	@Column(name="IMAGE_LINK")
 	private String imageLink;
 
-	private BigDecimal price;
+	private double price;
 
 	@Column(name="PRODUCT_DESCRIPTION")
 	private String productDescription;
@@ -62,11 +65,11 @@ public class Shopproduct implements Serializable {
 		this.imageLink = imageLink;
 	}
 
-	public BigDecimal getPrice() {
+	public double getPrice() {
 		return this.price;
 	}
 
-	public void setPrice(BigDecimal price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 

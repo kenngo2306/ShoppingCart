@@ -1,8 +1,10 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
-import java.math.BigDecimal;
+
+
 
 
 /**
@@ -10,12 +12,13 @@ import java.math.BigDecimal;
  * 
  */
 @Entity
+@Table(name="SHOPREVIEW", schema="TESTDB")
 @NamedQuery(name="Shopreview.findAll", query="SELECT s FROM Shopreview s")
 public class Shopreview implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="SHOPREVIEW_REVIEWID_GENERATOR", sequenceName="SEQ_SHOPREVIEW")
+	@SequenceGenerator(name="SHOPREVIEW_REVIEWID_GENERATOR", sequenceName="SEQ_SHOPREVIEW" , schema="TESTDB", allocationSize = 1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SHOPREVIEW_REVIEWID_GENERATOR")
 	@Column(name="REVIEW_ID")
 	private long reviewId;
@@ -23,7 +26,7 @@ public class Shopreview implements Serializable {
 	@Column(name="REVIEW_CONTENT")
 	private String reviewContent;
 
-	private BigDecimal stars;
+	private int stars;
 
 	//bi-directional many-to-one association to Shopproduct
 	@ManyToOne
@@ -54,11 +57,11 @@ public class Shopreview implements Serializable {
 		this.reviewContent = reviewContent;
 	}
 
-	public BigDecimal getStars() {
+	public int getStars() {
 		return this.stars;
 	}
 
-	public void setStars(BigDecimal stars) {
+	public void setStars(int stars) {
 		this.stars = stars;
 	}
 

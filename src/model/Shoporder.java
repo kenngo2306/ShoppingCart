@@ -2,7 +2,7 @@ package model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.math.BigDecimal;
+
 import java.util.Date;
 import java.util.List;
 
@@ -12,12 +12,13 @@ import java.util.List;
  * 
  */
 @Entity
+@Table(name="SHOPORDER", schema="TESTDB")
 @NamedQuery(name="Shoporder.findAll", query="SELECT s FROM Shoporder s")
 public class Shoporder implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="SHOPORDER_ORDERID_GENERATOR", sequenceName="SEQ_SHOPORDER")
+	@SequenceGenerator(name="SHOPORDER_ORDERID_GENERATOR", sequenceName="SEQ_SHOPORDER" , schema="TESTDB", allocationSize = 1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SHOPORDER_ORDERID_GENERATOR")
 	@Column(name="ORDER_ID")
 	private long orderId;
@@ -30,7 +31,7 @@ public class Shoporder implements Serializable {
 	private String orderStatus;
 
 	@Column(name="ORDER_TOTAL")
-	private BigDecimal orderTotal;
+	private double orderTotal;
 
 	//bi-directional many-to-one association to Shoplineitem
 	@OneToMany(mappedBy="shoporder")
@@ -68,11 +69,11 @@ public class Shoporder implements Serializable {
 		this.orderStatus = orderStatus;
 	}
 
-	public BigDecimal getOrderTotal() {
+	public double getOrderTotal() {
 		return this.orderTotal;
 	}
 
-	public void setOrderTotal(BigDecimal orderTotal) {
+	public void setOrderTotal(double orderTotal) {
 		this.orderTotal = orderTotal;
 	}
 

@@ -16,7 +16,7 @@ public class Shopuser implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="SHOPUSER_USERID_GENERATOR", sequenceName="SEQ_SHOPUSER")
+	@SequenceGenerator(name="SHOPUSER_USERID_GENERATOR", sequenceName="SEQ_SHOPUSER" , schema="TESTDB", allocationSize = 1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SHOPUSER_USERID_GENERATOR")
 	@Column(name="USER_ID")
 	private long userId;
