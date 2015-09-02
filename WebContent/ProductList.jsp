@@ -47,6 +47,10 @@
 					<h2>${product.productName}</h2>
 					<p>${product.productDescription}</p>
 					<p>$ ${product.price}</p>
+					
+					<c:if test="${not empty user}">
+  						<a href="./AddToCart?productId=${product.productId}" class="btn btn-primary">Add to Cart</a>
+					</c:if>
 				</div>
 				<div class="col-sm-5 col-offset-5">
 					<img src="${product.imageLink}" alt="${product.productName}" width=319 height=200/>

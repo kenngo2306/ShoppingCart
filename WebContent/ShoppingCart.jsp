@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -20,20 +21,17 @@
 <title>Shopping Cart</title>
 </head>
 <body>
-	<nav class="navbar navbar-inverse">
-	  <div class="container-fluid">
-	    <div class="navbar-header">
-	      <a class="navbar-brand">Shopping Cart!</a>
-	    </div>
-	    <div>
-	      <ul class="nav navbar-nav">
-	      	<li><a href="AllProduct">Product List</a></li>
-	      	<li>
-	      		<a href="ShoppingCart"> <span class="glyphicon glyphicon-shopping-cart"></span> <span class="badge">${sessionScope.user.fullName}</span></a></li>
-	      </ul>
-	    </div>
-	  </div>
-	</nav>
-	${lineData}
+	<jsp:include page="./header.jsp"/>
+	
+	<c:forEach var="lineItem" items="${order.shoplineitems}">
+		<div class="row col-sm-6 col-sm-offset-3">
+		  <div class="item ">
+				<div class="col-sm-5">
+					<h2>${lineItem.shopproduct.productName}</h2>
+				</div>
+
+		  </div>
+		</div>
+	</c:forEach>
 </body>
 </html>

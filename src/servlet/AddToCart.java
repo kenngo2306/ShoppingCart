@@ -12,7 +12,9 @@ import javax.servlet.http.HttpSession;
 import db.DBLineItem;
 import db.DBProduct;
 import model.Shoplineitem;
+import model.Shoporder;
 import model.Shopproduct;
+import model.Shopuser;
 
 /**
  * Servlet implementation class AddToCart
@@ -61,10 +63,19 @@ public class AddToCart extends HttpServlet {
 		Shoplineitem lineItem = new Shoplineitem();
 		lineItem.setQuantity(quantity);
 		lineItem.setShopproduct(DBProduct.getProduct(productId));
-		DBLineItem.insert(lineItem);
-		long numItems = DBLineItem.getCount();
+		
+		//get active order (order/shopping cart with 'OPEN' status)
 		HttpSession session = request.getSession();
-		session.setAttribute("numItems", numItems);
+		Shopuser user = (Shopuser)session.getAttribute("user");
+		Shoporder activeOrder = user.getActiveOrder();
+		System.out.println("Active order id = " + activeOrder.getOrderId());
+		
+		//set order id
+		lineItem.setShoporder(activeOrder);
+		
+		DBLineItem.insert(lineItem);
+		
+		
 		getServletContext().getRequestDispatcher("/ShoppingCart").forward(request, response);
 	}
 
