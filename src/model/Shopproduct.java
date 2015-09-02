@@ -140,5 +140,25 @@ public class Shopproduct implements Serializable {
 
 		return shopreview;
 	}
+	
+	public double getAvgRating()
+	{
+		try
+		{
+			List<Shopreview> reviews = getShopreviews();
+			double totalStars = 0;
+			for(Shopreview review : reviews)
+			{
+				totalStars += review.getStars();
+			}
+			double average = totalStars / reviews.size();
+			return average;
+		}
+		catch(Exception e)
+		{
+			return 0;
+		}
+
+	}
 
 }

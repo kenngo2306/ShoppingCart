@@ -1,7 +1,9 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.List;
 
+import javax.persistence.criteria.Order;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -9,22 +11,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import db.DBLineItem;
-import db.DBUser;
-import model.Shoplineitem;
+import db.DBOrder;
+import model.Shoporder;
 import model.Shopuser;
 
 /**
- * Servlet implementation class RemoveItem
+ * Servlet implementation class ViewOrders
  */
-@WebServlet("/RemoveItem")
-public class RemoveItem extends HttpServlet {
+@WebServlet("/ViewOrders")
+public class ViewOrders extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RemoveItem() {
+    public ViewOrders() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,7 +35,29 @@ public class RemoveItem extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doPost(request, response);
+		
+		
+		HttpSession session = request.getSession();
+		Shopuser user = (Shopuser) session.getAttribute("user");
+		
+		List<Shoporder> orders = null;
+		
+		//if user is admin
+		if(user.getUserRole().equals("0"))
+		{
+			System.out.println("admin");
+			
+			//get all orders
+			orders = DBOrder.getAllOrders();
+		}
+		//if regular user:
+		else
+		{
+			orders = user.getShoporders();
+		}
+		
+		request.setAttribute("orders", orders);
+		getServletContext().getRequestDispatcher("/ViewOrders.jsp").forward(request, response);
 	}
 
 	/**
@@ -42,23 +65,6 @@ public class RemoveItem extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("dopost in remove item");
-		String lineItemIdStr = request.getParameter("lineItemId");
-		
-		long lineItemId = Long.parseLong(lineItemIdStr);
-		
-		Shoplineitem lineItem = DBLineItem.getLineItem(lineItemId);
-		
-		DBLineItem.delete(lineItem);
-		
-		//reset user object in session variable
-		HttpSession session = request.getSession();
-		Shopuser user = (Shopuser)session.getAttribute("user");
-		Shopuser updatedUser = DBUser.getUser(user.getUserId());
-		session.setAttribute("user", updatedUser);
-		
-		
-		getServletContext().getRequestDispatcher("/ShoppingCart").forward(request, response);
 	}
 
 }

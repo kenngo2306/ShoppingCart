@@ -32,11 +32,18 @@ public class DBUserTest
 		System.out.println(DBUser.login(user));
 	}
 	
-	@Test
+//	@Test
 	public void testHasActiveOrder()
 	{
 		Shopuser user = DBUser.getUser(5);
 		assertTrue(user.hasActiveOrder());
+	}
+	
+//	@Test
+	public void testHasNoReview()
+	{
+		assertFalse(DBUser.hasNoReview(8, 3));
+		assertTrue(DBUser.hasNoReview(8, 2));
 	}
 	
 //	@Test

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import db.DBOrder;
+import db.DBUser;
 import model.Shoporder;
 import model.Shopuser;
 
@@ -67,6 +68,11 @@ public class PlaceOrder extends HttpServlet {
 		
 		//insertt new order into database
 		DBOrder.insert(newOrder);
+		
+		//reset user object in session variable
+		Shopuser updatedUser = DBUser.getUser(user.getUserId());
+		
+		session.setAttribute("user", updatedUser);
 		
 		request.setAttribute("order", order);
 		getServletContext().getRequestDispatcher("/Confirmation.jsp").forward(request, response);

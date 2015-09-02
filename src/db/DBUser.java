@@ -41,6 +41,37 @@ public class DBUser
 		}
 	}
 	
+	public static boolean hasNoReview(long productId, long userId)
+	{
+		EntityManager em = DBUtil.getEmFactory().createEntityManager();
+		String query = "SELECT count(r.reviewId) FROM Shopreview r WHERE r.shopproduct.productId = :productId AND r.shopuser.userId = :userId";
+		
+		try
+		{
+			long l = (long) em.createQuery(query)
+					.setParameter("productId", productId)
+					.setParameter("userId", userId)
+					.getSingleResult();
+			if (l>0)
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+		finally
+		{
+			em.close();
+		}
+	}
+	
 	public static boolean isAvailable(Shopuser user)
 	{
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();

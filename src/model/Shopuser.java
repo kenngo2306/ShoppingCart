@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import db.DBOrder;
+import db.DBUser;
 
 import java.util.List;
 
@@ -172,6 +173,11 @@ public class Shopuser implements Serializable {
 		Shoporder  order = DBOrder.getOrder(orderId);
 		List<Shoplineitem> lineItems = order.getShoplineitems();
 		return lineItems.size();
+	}
+	
+	public boolean hasNoReview(long productId)
+	{
+		return DBUser.hasNoReview(productId, getUserId());
 	}
 
 }
