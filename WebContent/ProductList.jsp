@@ -21,7 +21,7 @@
 <style>
 	.item
 	{
-		padding:20px;
+		padding:10px;
 		margin-top:20px;
 		border: 1px solid black;
 		height: 250px;
@@ -49,8 +49,13 @@
 					<p>$ ${product.price}</p>
 					
 					<c:if test="${not empty user}">
-  						<a href="./AddToCart?productId=${product.productId}" class="btn btn-primary">Add to Cart</a>
-  						<a href="./Reviews?productId=${product.productId}" class="btn btn-primary">Rating: ${product.getAvgRating()} </a>
+  						<a href="./AddToCart?productId=${product.productId}" class="btn btn-primary">Add to Cart</a><br>
+  						<a href="./Reviews?productId=${product.productId}" class="btn btn-success">
+  						Rating:
+  							<c:forEach begin="1" end="${product.getAvgRating()}" var="val">
+  								&#9733;
+  							</c:forEach>
+  						</a>
 					</c:if>
 				</div>
 				<div class="col-sm-5 col-offset-5">
