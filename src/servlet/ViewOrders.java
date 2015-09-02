@@ -3,6 +3,7 @@ package servlet;
 import java.io.IOException;
 import java.util.List;
 
+import javax.persistence.criteria.Order;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,23 +11,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import model.Shoplineitem;
+import db.DBOrder;
 import model.Shoporder;
 import model.Shopuser;
-import db.DBLineItem;
-import db.DBUser;
 
 /**
- * Servlet implementation class ShoppingCart
+ * Servlet implementation class ViewOrders
  */
-@WebServlet("/ShoppingCart")
-public class ShoppingCart extends HttpServlet {
+@WebServlet("/ViewOrders")
+public class ViewOrders extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ShoppingCart() {
+    public ViewOrders() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,17 +36,28 @@ public class ShoppingCart extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		//get active order
+		
 		HttpSession session = request.getSession();
 		Shopuser user = (Shopuser) session.getAttribute("user");
 		
-		//refresh user
-		Shopuser user2 = DBUser.getUser(user.getUserId());
+		List<Shoporder> orders = null;
 		
-		Shoporder order = user2.getActiveOrder();
-		System.out.println("order items size = " + order.getShoplineitems().size());
-		request.setAttribute("order", order);
-		getServletContext().getRequestDispatcher("/ShoppingCart.jsp").forward(request, response);
+		//if user is admin
+		if(user.getUserRole().equals("0"))
+		{
+			System.out.println("admin");
+			
+			//get all orders
+			orders = DBOrder.getAllOrders();
+		}
+		//if regular user:
+		else
+		{
+			orders = user.getShoporders();
+		}
+		
+		request.setAttribute("orders", orders);
+		getServletContext().getRequestDispatcher("/ViewOrders.jsp").forward(request, response);
 	}
 
 	/**
@@ -55,7 +65,6 @@ public class ShoppingCart extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request,response);
 	}
 
 }

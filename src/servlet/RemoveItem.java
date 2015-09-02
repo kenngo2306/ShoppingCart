@@ -10,23 +10,21 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import db.DBLineItem;
-import db.DBProduct;
+import db.DBUser;
 import model.Shoplineitem;
-import model.Shoporder;
-import model.Shopproduct;
 import model.Shopuser;
 
 /**
- * Servlet implementation class AddToCart
+ * Servlet implementation class RemoveItem
  */
-@WebServlet("/AddToCart")
-public class AddToCart extends HttpServlet {
+@WebServlet("/RemoveItem")
+public class RemoveItem extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddToCart() {
+    public RemoveItem() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,14 +34,7 @@ public class AddToCart extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("doget addtoCart");
-		String productIdStr = request.getParameter("productId");
-		
-		long productId = Long.parseLong(productIdStr);
-		
-		Shopproduct product = DBProduct.getProduct(productId);
-		request.setAttribute("product", product);
-		getServletContext().getRequestDispatcher("/AddToCart.jsp").forward(request, response);
+		doPost(request, response);
 	}
 
 	/**
@@ -51,29 +42,20 @@ public class AddToCart extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("dopost");
+		System.out.println("dopost in remove item");
+		String lineItemIdStr = request.getParameter("lineItemId");
 		
-		String quantityStr = request.getParameter("quantity");
-		String productIdStr = request.getParameter("productId");
+		long lineItemId = Long.parseLong(lineItemIdStr);
 		
-		System.out.println(quantityStr + " " + productIdStr);
-		double quantity = Double.parseDouble(quantityStr);
-		long productId = Long.parseLong(productIdStr);
+		Shoplineitem lineItem = DBLineItem.getLineItem(lineItemId);
 		
-		Shoplineitem lineItem = new Shoplineitem();
-		lineItem.setQuantity(quantity);
-		lineItem.setShopproduct(DBProduct.getProduct(productId));
+		DBLineItem.delete(lineItem);
 		
-		//get active order (order/shopping cart with 'OPEN' status)
+		//reset user object in session variable
 		HttpSession session = request.getSession();
 		Shopuser user = (Shopuser)session.getAttribute("user");
-		Shoporder activeOrder = user.getActiveOrder();
-		System.out.println("Active order id = " + activeOrder.getOrderId());
-		
-		//set order id
-		lineItem.setShoporder(activeOrder);
-		
-		DBLineItem.insert(lineItem);
+		Shopuser updatedUser = DBUser.getUser(user.getUserId());
+		session.setAttribute("user", updatedUser);
 		
 		
 		getServletContext().getRequestDispatcher("/ShoppingCart").forward(request, response);

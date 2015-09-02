@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -18,46 +18,14 @@
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/jquery.validate.min.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/additional-methods.js"></script>
 <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.14.0/additional-methods.min.js"></script>
-<style>
-	.item
-	{
-		padding:20px;
-		margin-top:20px;
-		border: 1px solid black;
-		height: 250px;
-	}
-	img
-	{
-		margin:auto; 
-		width:200px;
-		display:block;
-		float:right;
-	}
-</style>
-<title>Product List</title>
-
+<title>Confirmation</title>
 </head>
 <body>
 	<jsp:include page="./header.jsp"/>
-	
-	<c:forEach var="product" items="${products}">
-		<div class="row col-sm-6 col-sm-offset-3">
-		  <div class="item ">
-				<div class="col-sm-5">
-					<h2>${product.productName}</h2>
-					<p>${product.productDescription}</p>
-					<p>$ ${product.price}</p>
-					
-					<c:if test="${not empty user}">
-  						<a href="./AddToCart?productId=${product.productId}" class="btn btn-primary">Add to Cart</a>
-  						<a href="./Reviews?productId=${product.productId}" class="btn btn-primary">Rating: ${product.getAvgRating()} </a>
-					</c:if>
-				</div>
-				<div class="col-sm-5 col-offset-5">
-					<img src="${product.imageLink}" alt="${product.productName}" width=319 height=200/>
-				</div>
-		  </div>
-		</div>
-	</c:forEach>
+	<div class="alert alert-success col-sm-6 col-sm-offset-3">
+		<h2>Congratulation! Your order has been placed!</h2>
+		<h3>Order ID: ${order.orderId}</h3>
+		<h3>Order Total: ${order.orderTotal}</h3>
+	</div>
 </body>
 </html>

@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,24 +10,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import db.DBLineItem;
-import db.DBProduct;
-import model.Shoplineitem;
-import model.Shoporder;
 import model.Shopproduct;
+import model.Shopreview;
 import model.Shopuser;
+import db.DBProduct;
+import db.DBReview;
 
 /**
- * Servlet implementation class AddToCart
+ * Servlet implementation class Reviews
  */
-@WebServlet("/AddToCart")
-public class AddToCart extends HttpServlet {
+@WebServlet("/Reviews")
+public class Reviews extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AddToCart() {
+    public Reviews() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,14 +36,14 @@ public class AddToCart extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("doget addtoCart");
 		String productIdStr = request.getParameter("productId");
 		
 		long productId = Long.parseLong(productIdStr);
 		
 		Shopproduct product = DBProduct.getProduct(productId);
+		
 		request.setAttribute("product", product);
-		getServletContext().getRequestDispatcher("/AddToCart.jsp").forward(request, response);
+		getServletContext().getRequestDispatcher("/Reviews.jsp").forward(request, response);
 	}
 
 	/**
@@ -51,32 +51,29 @@ public class AddToCart extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("dopost");
 		
-		String quantityStr = request.getParameter("quantity");
+		String content = request.getParameter("content");
+		String starsStr = request.getParameter("stars");
 		String productIdStr = request.getParameter("productId");
 		
-		System.out.println(quantityStr + " " + productIdStr);
-		double quantity = Double.parseDouble(quantityStr);
-		long productId = Long.parseLong(productIdStr);
 		
-		Shoplineitem lineItem = new Shoplineitem();
-		lineItem.setQuantity(quantity);
-		lineItem.setShopproduct(DBProduct.getProduct(productId));
+		int stars = Integer.parseInt(starsStr);
 		
-		//get active order (order/shopping cart with 'OPEN' status)
+		int productId = Integer.parseInt(productIdStr);
+		Shopproduct product = DBProduct.getProduct(productId);
+		
 		HttpSession session = request.getSession();
-		Shopuser user = (Shopuser)session.getAttribute("user");
-		Shoporder activeOrder = user.getActiveOrder();
-		System.out.println("Active order id = " + activeOrder.getOrderId());
+		Shopuser user = (Shopuser) session.getAttribute("user");
 		
-		//set order id
-		lineItem.setShoporder(activeOrder);
+		Shopreview review = new Shopreview();
+		review.setReviewContent(content);
+		review.setShopproduct(product);
+		review.setShopuser(user);
+		review.setStars(stars);
 		
-		DBLineItem.insert(lineItem);
+		DBReview.insert(review);
 		
-		
-		getServletContext().getRequestDispatcher("/ShoppingCart").forward(request, response);
+		response.sendRedirect("./Reviews?productId=" + productIdStr);
 	}
 
 }

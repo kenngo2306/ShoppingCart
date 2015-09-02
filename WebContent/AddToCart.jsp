@@ -42,7 +42,7 @@
 	  </div>
 	</nav>
 	<div class="row">
-  <div class="col-sm-6 col-md-4">
+  <div class="row col-sm-6 col-sm-offset-3">
     <div class="thumbnail">
       <img src="${product.imageLink}" alt="thumb">
       <div class="caption">

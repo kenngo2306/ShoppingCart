@@ -12,6 +12,20 @@ import customTools.DBUtil;
 
 public class DBLineItem
 {
+	
+	public static Shoplineitem getLineItem(long lineItemId)
+	{
+		EntityManager em = DBUtil.getEmFactory().createEntityManager();
+		try
+		{
+			Shoplineitem lineItem = em.find(Shoplineitem.class, lineItemId);
+			return lineItem;
+		}
+		finally
+		{
+			em.close();
+		}
+	}
 	public static long getCount()
 	{
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
@@ -112,23 +126,23 @@ public class DBLineItem
 //		}
 //	}
 //
-//	public static void delete(Shopproduct product) 
-//	{
-//		EntityManager em = DBUtil.getEmFactory().createEntityManager();
-//		EntityTransaction trans = em.getTransaction();
-//		trans.begin(); 
-//		try 
-//		{
-//			em.remove(em.merge(product));
-//			trans.commit();
-//		} 
-//		catch (Exception e) 
-//		{
-//			System.out.println(e);
-//			trans.rollback();
-//		} finally 
-//		{
-//			em.close();
-//		} 
-//	}
+	public static void delete(Shoplineitem lineItem) 
+	{
+		EntityManager em = DBUtil.getEmFactory().createEntityManager();
+		EntityTransaction trans = em.getTransaction();
+		trans.begin(); 
+		try 
+		{
+			em.remove(em.merge(lineItem));
+			trans.commit();
+		} 
+		catch (Exception e) 
+		{
+			System.out.println(e);
+			trans.rollback();
+		} finally 
+		{
+			em.close();
+		} 
+	}
 }

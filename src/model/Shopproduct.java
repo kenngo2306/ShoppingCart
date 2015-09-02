@@ -1,8 +1,10 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
-import java.math.BigDecimal;
+
+
 import java.util.List;
 
 
@@ -11,13 +13,13 @@ import java.util.List;
  * 
  */
 @Entity
-@Table (name="SHOPPRODUCT", schema="TESTDB")
+@Table(name="SHOPPRODUCT", schema="TESTDB")
 @NamedQuery(name="Shopproduct.findAll", query="SELECT s FROM Shopproduct s")
 public class Shopproduct implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="SHOPPRODUCT_PRODUCTID_GENERATOR", sequenceName="SEQ_SHOPPRODUCT")
+	@SequenceGenerator(name="SHOPPRODUCT_PRODUCTID_GENERATOR", sequenceName="SEQ_SHOPPRODUCT" , schema="TESTDB", allocationSize = 1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SHOPPRODUCT_PRODUCTID_GENERATOR")
 	@Column(name="PRODUCT_ID")
 	private long productId;
@@ -39,6 +41,10 @@ public class Shopproduct implements Serializable {
 	//bi-directional many-to-one association to Shoplineitem
 	@OneToMany(mappedBy="shopproduct")
 	private List<Shoplineitem> shoplineitems;
+
+	//bi-directional many-to-one association to Shopreview
+	@OneToMany(mappedBy="shopproduct")
+	private List<Shopreview> shopreviews;
 
 	public Shopproduct() {
 	}
@@ -111,6 +117,48 @@ public class Shopproduct implements Serializable {
 		shoplineitem.setShopproduct(null);
 
 		return shoplineitem;
+	}
+
+	public List<Shopreview> getShopreviews() {
+		return this.shopreviews;
+	}
+
+	public void setShopreviews(List<Shopreview> shopreviews) {
+		this.shopreviews = shopreviews;
+	}
+
+	public Shopreview addShopreview(Shopreview shopreview) {
+		getShopreviews().add(shopreview);
+		shopreview.setShopproduct(this);
+
+		return shopreview;
+	}
+
+	public Shopreview removeShopreview(Shopreview shopreview) {
+		getShopreviews().remove(shopreview);
+		shopreview.setShopproduct(null);
+
+		return shopreview;
+	}
+	
+	public double getAvgRating()
+	{
+		try
+		{
+			List<Shopreview> reviews = getShopreviews();
+			double totalStars = 0;
+			for(Shopreview review : reviews)
+			{
+				totalStars += review.getStars();
+			}
+			double average = totalStars / reviews.size();
+			return average;
+		}
+		catch(Exception e)
+		{
+			return 0;
+		}
+
 	}
 
 }
