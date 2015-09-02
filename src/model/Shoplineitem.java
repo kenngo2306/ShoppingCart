@@ -67,5 +67,10 @@ public class Shoplineitem implements Serializable {
 	public void setShoporder(Shoporder shoporder) {
 		this.shoporder = shoporder;
 	}
+	
+	public double getLineTotal()
+	{
+		return getShopproduct().getPrice() * getQuantity();
+	}
 
 }

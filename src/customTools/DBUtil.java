@@ -11,6 +11,7 @@ public class DBUtil
 	
 	public static EntityManagerFactory getEmFactory()
 	{
+		emf.getCache().evictAll();
 		return emf;
 	}
 }

@@ -30,38 +30,54 @@
 	img
 	{
 		margin:auto; 
-		width:200px;
+		width:100px;
+		height:100px;
 		display:block;
-		float:right;
+		float:left;
 	}
 </style>
 
 </head>
 <body>
 	<jsp:include page="./header.jsp"/>
-	<div class= "jumbotron col-sm-6 col-sm-offset-3 ">
-		<h3>Order Subtotal = $ ${order.getSubtotal()} </h3>
-		<a class="btn btn-primary" href="./Checkout">Checkout</a>
+	<div class=" col-sm-6 col-sm-offset-3">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Description</th>
+					<th>Picture</th>
+					<th>Quantity</th>
+					<th>Price</th>
+					<th>LineTotal</th>
+				</tr>
+			</thead>
+			<c:forEach var="lineItem" items="${order.shoplineitems}">
+						<tr>
+							<td>${lineItem.shopproduct.productName}</td>
+							<td>${lineItem.shopproduct.productDescription}</td>
+							<td><img src="${lineItem.shopproduct.imageLink}" alt = "${lineItem.shopproduct.productName}"/></td>
+							<td>${lineItem.quantity}</td>
+							<td align="right">$ ${lineItem.shopproduct.price}</td>
+							<td align="right">$ ${lineItem.getLineTotal()}</td>
+						</tr>
+			</c:forEach>
+			<tr>
+				<td colspan="5" align="right">Subtotal: </td>
+				<td align="right">$ ${order.getFormattedSubtotal()}</td>
+			</tr>
+			<tr>
+				<td colspan="5" align="right">Tax(6%): </td>
+				<td align="right">$ ${order.getFormattedTax()}</td>
+			</tr>
+			<tr>
+				<td colspan="5" align="right">Order Total: </td>
+				<td align="right">$ ${order.getFormattedTotal()}</td>
+			</tr>
+		</table>
+		<a href="./PlaceOrder" class="btn btn-success col-sm-offset-10" >Place Order</a>
 	</div>
-	<c:forEach var="lineItem" items="${order.shoplineitems}">
-		<div class="row col-sm-6 col-sm-offset-3">
-		  <div class="item ">
 
-				<div class="col-sm-5">
-					<h2>${lineItem.shopproduct.productName}</h2>
-					<p>${lineItem.shopproduct.productDescription}</p>
-					<p>$ ${lineItem.shopproduct.price}</p>
-					<p>Quantity: ${lineItem.quantity}</p>
-					<c:if test="${not empty user}">
-  						<a href="./RemoveItem?lineItemId=${lineItem.lineItemId}" class="btn btn-danger">Remove</a>
-					</c:if>
-				</div>
-				<div class="col-sm-5 col-offset-5">
-					<img src="${lineItem.shopproduct.imageLink}" alt="${lineItem.shopproduct.productName}" width=319 height=200/>
-				</div>
-		  </div>
-		  </div>
-		</div>
-	</c:forEach>
+
 </body>
 </html>

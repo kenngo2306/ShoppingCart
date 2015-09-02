@@ -61,7 +61,7 @@ public class DBOrderTest
 		long userId = 3;
 		Shopuser user = DBUser.getUser(userId);
 		
-		Shoporder order = user.getActiveOrder();
+		Shoporder order = DBOrder.getOrder(3);
 		System.out.println("initial order item size = " + order.getShoplineitems().size());
 		
 		Shoplineitem lineItem =  new Shoplineitem();

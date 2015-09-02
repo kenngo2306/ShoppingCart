@@ -106,5 +106,42 @@ public class Shoporder implements Serializable {
 	public void setShopuser(Shopuser shopuser) {
 		this.shopuser = shopuser;
 	}
+	
+	public double getSubtotal()
+	{
+		List<Shoplineitem> lineItems = getShoplineitems();
+		double total = 0;
+		for(Shoplineitem lineItem : lineItems)
+		{
+			total = total + (lineItem.getQuantity() * lineItem.getShopproduct().getPrice());
+		}
+		
+		return total;
+	}
+	
+	public String getFormattedSubtotal()
+	{
+		return String.format("%.2f", getSubtotal());
+	}
+	
+	public String getFormattedTax()
+	{
+		return String.format("%.2f", getTax());
+	}
+	
+	public String getFormattedTotal()
+	{
+		return String.format("%.2f", getTotal());
+	}
+	
+	public double getTax()
+	{
+		return getSubtotal() * 0.06;
+	}
+	
+	public double getTotal()
+	{
+		return getSubtotal() + getTax();
+	}
 
 }
