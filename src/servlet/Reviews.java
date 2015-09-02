@@ -72,7 +72,8 @@ public class Reviews extends HttpServlet {
 		review.setStars(stars);
 		
 		DBReview.insert(review);
-		getServletContext().getRequestDispatcher("/Reviews?productId="+productId+".jsp").forward(request, response);
+		
+		response.sendRedirect("./Reviews?productId=" + productIdStr);
 	}
 
 }
