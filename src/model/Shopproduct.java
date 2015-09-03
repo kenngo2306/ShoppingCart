@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
-
 import java.util.List;
 
 
@@ -19,7 +18,7 @@ public class Shopproduct implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="SHOPPRODUCT_PRODUCTID_GENERATOR", sequenceName="SEQ_SHOPPRODUCT" , schema="TESTDB", allocationSize = 1, initialValue = 1)
+	@SequenceGenerator(name="SHOPPRODUCT_PRODUCTID_GENERATOR", sequenceName="SEQ_SHOPPRODUCT" , schema="TESTDB", allocationSize = 1, initialValue = 11)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SHOPPRODUCT_PRODUCTID_GENERATOR")
 	@Column(name="PRODUCT_ID")
 	private long productId;
@@ -37,6 +36,43 @@ public class Shopproduct implements Serializable {
 
 	@Column(name="PRODUCT_TYPE")
 	private String productType;
+	
+	//bi-directional many-to-one association to Shopuser
+	@ManyToOne
+	@JoinColumn(name="USER_ID")
+	private Shopuser shopuser;
+	
+	@Column(name="AVAILABLE")
+	private String available;
+	
+	@Column(name="SHIPPINGCOST")
+	private double shippingcost;
+	
+	
+
+	public Shopuser getShopuser() {
+		return shopuser;
+	}
+
+	public void setShopuser(Shopuser shopuser) {
+		this.shopuser = shopuser;
+	}
+
+	public String getAvailable() {
+		return available;
+	}
+
+	public void setAvailable(String available) {
+		this.available = available;
+	}
+
+	public double getShippingcost() {
+		return shippingcost;
+	}
+
+	public void setShippingcost(double shippingcost) {
+		this.shippingcost = shippingcost;
+	}
 
 	//bi-directional many-to-one association to Shoplineitem
 	@OneToMany(mappedBy="shopproduct")
