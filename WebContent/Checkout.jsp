@@ -75,7 +75,27 @@
 				<td align="right">$ ${order.getFormattedTotal()}</td>
 			</tr>
 		</table>
-		<a href="./PlaceOrder" class="btn btn-success col-sm-offset-10" >Place Order</a>
+
+		
+	</div>
+	<div class=" col-sm-6 col-sm-offset-3">
+			<form role="form" action="PlaceOrder" method="POST">
+				<div class="input-group">
+					<label for="creditCard">Credit Card Number: </label>
+					<input type="number" name="creditCard" class="form-control" required/>
+				</div>
+				<div class="input-group">
+					<label for="billingAddress">Billing Address: </label>
+					<input type="text" name="billingAddress" class="form-control" required/>
+				</div>
+				<div class="input-group">
+					<label for="shippingAddress">Shipping Address: </label>
+					<input type="text" name="shippingAddress" class="form-control" required/>
+				</div>
+				<div class="input-group">
+					<input type="submit" value="Place Order" class="btn btn-success"/>
+				</div>
+			</form>
 	</div>
 
 

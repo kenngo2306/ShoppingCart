@@ -32,10 +32,52 @@ public class Shoporder implements Serializable {
 
 	@Column(name="ORDER_TOTAL")
 	private double orderTotal;
+	
+	@Column(name="CREDIT_CARD")
+	private String creditCard;
+	
+	@Column(name="BILLING_ADDRESS")
+	private String billingAddress;
+	
+	@Column(name="SHIPPING_ADDRESS")
+	private String shippingAddress;
+	
+	
+
+	public String getCreditCard()
+	{
+		return creditCard;
+	}
+
+	public void setCreditCard(String creditCard)
+	{
+		this.creditCard = creditCard;
+	}
+
+	public String getBillingAddress()
+	{
+		return billingAddress;
+	}
+
+	public void setBillingAddress(String billingAddress)
+	{
+		this.billingAddress = billingAddress;
+	}
+
+	public String getShippingAddress()
+	{
+		return shippingAddress;
+	}
+
+	public void setShippingAddress(String shippingAddress)
+	{
+		this.shippingAddress = shippingAddress;
+	}
 
 	//bi-directional many-to-one association to Shoplineitem
 	@OneToMany(mappedBy="shoporder")
 	private List<Shoplineitem> shoplineitems;
+	
 
 	//bi-directional many-to-one association to Shopuser
 	@ManyToOne
