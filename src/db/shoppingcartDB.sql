@@ -14,23 +14,6 @@ CREATE TABLE ShopLineItem
   quantity NUMBER(10,2)
 );
 
-CREATE SEQUENCE SEQ_SHOPPRODUCT;
-
-CREATE SEQUENCE SEQ_SHOPLINEITEM;
-DROP SEQUENCE SEQ_SHOPLINEITEM;
-ALTER TABLE ShopProduct ADD image_link VARCHAR(200);
-
-INSERT INTO SHOPPRODUCT VALUES (SEQ_SHOPPRODUCT.NEXTVAL,'Tempura String bean roll','Tempura with spring bean roll (6 pieces)','roll',4,'images/1.jpg');
-INSERT INTO SHOPPRODUCT VALUES (SEQ_SHOPPRODUCT.NEXTVAL,'Takuan roll (Yellow pickled)','Yellow pickled roll (6 pieces)','roll',3.5,'images/2.jpg');
-INSERT INTO SHOPPRODUCT VALUES (SEQ_SHOPPRODUCT.NEXTVAL,'Seaweed roll ()','Tasty assorted seaweed Roll , salman, tuna (12 pieces)','roll',4,'images/3.jpg');
-INSERT INTO SHOPPRODUCT VALUES (SEQ_SHOPPRODUCT.NEXTVAL,'Kanpyo roll','Sweet melon rolls with seafood','roll',4,'images/4.jpg');
-INSERT INTO SHOPPRODUCT VALUES (SEQ_SHOPPRODUCT.NEXTVAL,'Vegetable roll ', 'Avocado w/ Cucumber roll','roll',3.5,'images/5.jpg');
-INSERT INTO SHOPPRODUCT VALUES (SEQ_SHOPPRODUCT.NEXTVAL,'Avocado roll','','roll',3.5,'images/6.jpg');
-INSERT INTO SHOPPRODUCT VALUES (SEQ_SHOPPRODUCT.NEXTVAL,'Cucumber roll','','roll',4,'images/7.jpg');
-INSERT INTO SHOPPRODUCT VALUES (SEQ_SHOPPRODUCT.NEXTVAL,'Seaweed salad','Salad bowl with seaweed','roll',3.5,'images/8.jpg');
-INSERT INTO SHOPPRODUCT VALUES (SEQ_SHOPPRODUCT.NEXTVAL,'Tempura Asparagus roll','Tempura shrimp with asparagus','roll',4,'images/9.jpg');
-INSERT INTO SHOPPRODUCT VALUES (SEQ_SHOPPRODUCT.NEXTVAL,'Sweet potatoes roll','','roll',3.5,'images/10.jpg');
-
 CREATE TABLE ShopUser
 (
   user_id INTEGER PRIMARY KEY,
@@ -39,8 +22,6 @@ CREATE TABLE ShopUser
   email VARCHAR(100),
   user_role VARCHAR(1)
 );
-ALTER TABLE ShopUser ADD user_password VARCHAR(50);
-CREATE SEQUENCE SEQ_SHOPUSER;
 
 CREATE TABLE ShopOrder 
 (
@@ -51,10 +32,6 @@ CREATE TABLE ShopOrder
   user_id INTEGER REFERENCES ShopUser(user_id)
 );
 
-CREATE SEQUENCE SEQ_SHOPORDER;
-
-ALTER TABLE SHOPLINEITEM ADD order_id INTEGER REFERENCES ShopOrder(order_id);
-
 CREATE TABLE ShopReview
 (
   review_id INTEGER PRIMARY KEY,
@@ -64,13 +41,37 @@ CREATE TABLE ShopReview
   stars NUMBER(1)
 );
 
+CREATE SEQUENCE SEQ_SHOPPRODUCT;
+
+CREATE SEQUENCE SEQ_SHOPLINEITEM;
+CREATE SEQUENCE SEQ_SHOPUSER;
+CREATE SEQUENCE SEQ_SHOPORDER;
 CREATE SEQUENCE SEQ_SHOPREVIEW;
 
+ALTER TABLE SHOPLINEITEM ADD order_id INTEGER REFERENCES ShopOrder(order_id);
+ALTER TABLE ShopUser ADD user_password VARCHAR(50);
 ALTER TABLE SHOPORDER ADD credit_card VARCHAR(20);
 ALTER TABLE SHOPORDER ADD billing_address VARCHAR(255);
 ALTER TABLE SHOPORDER ADD shipping_address VARCHAR(255);
-
 ALTER TABLE SHOPUSER ADD store_credit NUMBER(10,2);
+ALTER TABLE SHOPPRODUCT ADD SHIPPINGCOST NUMBER(10,2);
+ALTER TABLE SHOPPRODUCT ADD AVAILABLE VARCHAR(10);
+ALTER TABLE SHOPPRODUCT ADD USER_ID INTEGER REFERENCES SHOPUSER(USER_ID);
+ALTER TABLE ShopProduct ADD image_link VARCHAR(200);
 
-UPDATE SHOPUSER SET STORE_CREDIT = 0;
+
+--CREATE SEQUENCE SEQ_SHOPREVIEW;
+--INSERT INTO SHOPPRODUCT VALUES (SEQ_SHOPPRODUCT.NEXTVAL,'Tempura String bean roll','Tempura with spring bean roll (6 pieces)','roll',4,'images/1.jpg');
+--INSERT INTO SHOPPRODUCT VALUES (SEQ_SHOPPRODUCT.NEXTVAL,'Takuan roll (Yellow pickled)','Yellow pickled roll (6 pieces)','roll',3.5,'images/2.jpg');
+--INSERT INTO SHOPPRODUCT VALUES (SEQ_SHOPPRODUCT.NEXTVAL,'Seaweed roll ()','Tasty assorted seaweed Roll , salman, tuna (12 pieces)','roll',4,'images/3.jpg');
+--INSERT INTO SHOPPRODUCT VALUES (SEQ_SHOPPRODUCT.NEXTVAL,'Kanpyo roll','Sweet melon rolls with seafood','roll',4,'images/4.jpg');
+--INSERT INTO SHOPPRODUCT VALUES (SEQ_SHOPPRODUCT.NEXTVAL,'Vegetable roll ', 'Avocado w/ Cucumber roll','roll',3.5,'images/5.jpg');
+--INSERT INTO SHOPPRODUCT VALUES (SEQ_SHOPPRODUCT.NEXTVAL,'Avocado roll','','roll',3.5,'images/6.jpg');
+--INSERT INTO SHOPPRODUCT VALUES (SEQ_SHOPPRODUCT.NEXTVAL,'Cucumber roll','','roll',4,'images/7.jpg');
+--INSERT INTO SHOPPRODUCT VALUES (SEQ_SHOPPRODUCT.NEXTVAL,'Seaweed salad','Salad bowl with seaweed','roll',3.5,'images/8.jpg');
+--INSERT INTO SHOPPRODUCT VALUES (SEQ_SHOPPRODUCT.NEXTVAL,'Tempura Asparagus roll','Tempura shrimp with asparagus','roll',4,'images/9.jpg');
+--INSERT INTO SHOPPRODUCT VALUES (SEQ_SHOPPRODUCT.NEXTVAL,'Sweet potatoes roll','','roll',3.5,'images/10.jpg');
+
+
+
 

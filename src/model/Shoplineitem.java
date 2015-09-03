@@ -16,7 +16,7 @@ public class Shoplineitem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="SHOPLINEITEM_LINEITEMID_GENERATOR", sequenceName="SEQ_SHOPLINEITEM" , schema="TESTDB", allocationSize = 1)
+	@SequenceGenerator(name="SHOPLINEITEM_LINEITEMID_GENERATOR", sequenceName="SEQ_SHOPLINEITEM" , schema="TESTDB", allocationSize = 1, initialValue = 1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SHOPLINEITEM_LINEITEMID_GENERATOR")
 	@Column(name="LINE_ITEM_ID")
 	private long lineItemId;

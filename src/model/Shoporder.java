@@ -18,7 +18,7 @@ public class Shoporder implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="SHOPORDER_ORDERID_GENERATOR", sequenceName="SEQ_SHOPORDER" , schema="TESTDB", allocationSize = 1)
+	@SequenceGenerator(name="SHOPORDER_ORDERID_GENERATOR", sequenceName="SEQ_SHOPORDER" , schema="TESTDB", allocationSize = 1, initialValue = 1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="SHOPORDER_ORDERID_GENERATOR")
 	@Column(name="ORDER_ID")
 	private long orderId;
