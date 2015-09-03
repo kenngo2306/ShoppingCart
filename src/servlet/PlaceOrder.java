@@ -35,7 +35,7 @@ public class PlaceOrder extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doPost(request,response);
+//		doPost(request,response);
 	}
 
 	/**
@@ -43,6 +43,11 @@ public class PlaceOrder extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		//get credit card and address info
+		String creditCard = request.getParameter("creditCard");
+		String billingAddress = request.getParameter("billingAddress");
+		String shippingAddress = request.getParameter("shippingAddress");
 		
 		//get active order
 		HttpSession session = request.getSession();
@@ -53,6 +58,9 @@ public class PlaceOrder extends HttpServlet {
 		Date orderDate = new Date();
 		order.setOrderDate(orderDate);
 		
+		order.setCreditCard(creditCard);
+		order.setBillingAddress(billingAddress);
+		order.setShippingAddress(shippingAddress);
 		
 		order.setOrderTotal(order.getTotal());
 		order.setOrderStatus("PLACED");
