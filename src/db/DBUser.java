@@ -170,7 +170,7 @@ public class DBUser
 			trans.commit();
 		} catch (Exception e) 
 		{
-			System.out.println(e);
+			e.printStackTrace();
 			trans.rollback();
 		} 
 		finally 

@@ -39,6 +39,9 @@ public class Shopuser implements Serializable {
 	
 	@Column(name="USER_PASSWORD")
 	private String userPassword;
+	
+	@Column(name="STORE_CREDIT")
+	private double storeCredit;
 
 	//bi-directional many-to-one association to Shoporder
 	@OneToMany(mappedBy="shopuser")
@@ -53,6 +56,16 @@ public class Shopuser implements Serializable {
 
 	public long getUserId() {
 		return this.userId;
+	}
+
+	public double getStoreCredit()
+	{
+		return storeCredit;
+	}
+
+	public void setStoreCredit(double storeCredit)
+	{
+		this.storeCredit = storeCredit;
 	}
 
 	public void setUserId(long userId) {

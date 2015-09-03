@@ -20,6 +20,7 @@
 				<c:choose>
 				   <c:when test="${user.userRole eq 0}">
 				      <li><a href="ViewOrders">View Orders</a></li>
+				      <li><a href="StoreCredit">Manage Credit</a></li>
 				      <li><a href="Logout">Log out</a>
 				   </c:when>
 						

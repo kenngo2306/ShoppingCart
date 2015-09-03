@@ -70,10 +70,21 @@
 				<td colspan="5" align="right">Tax(6%): </td>
 				<td align="right">$ ${order.getFormattedTax()}</td>
 			</tr>
+
 			<tr>
 				<td colspan="5" align="right">Order Total: </td>
 				<td align="right">$ ${order.getFormattedTotal()}</td>
 			</tr>
+			<tr>
+				<td colspan="5" align="right">Store Credit: </td>
+				<td align="right">$ ${order.shopuser.storeCredit}</td>
+			</tr>
+			
+			<tr>
+				<td colspan="5" align="right">Payment Due: </td>
+				<td align="right">$ ${order.getPaymentDue()}</td>
+			</tr>
+			
 		</table>
 
 		
