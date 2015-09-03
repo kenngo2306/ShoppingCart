@@ -22,6 +22,15 @@ public class DBUserTest
 		DBUser.insert(user);
 	}
 	
+	@Test
+	public void testUpdateCredit()
+	{
+		Shopuser user = DBUser.getUser(2);
+		user.setStoreCredit(50);
+		
+		DBUser.update(user);
+	}
+	
 //	@Test
 	public void testLogin()
 	{

@@ -51,7 +51,10 @@ public class PlaceOrder extends HttpServlet {
 		
 		//get active order
 		HttpSession session = request.getSession();
-		Shopuser user = (Shopuser)session.getAttribute("user");
+		Shopuser tempUser = (Shopuser)session.getAttribute("user");
+		
+		//refresh user
+		Shopuser user = DBUser.getUser(tempUser.getUserId());
 		
 		Shoporder order = user.getActiveOrder();
 		
@@ -67,6 +70,29 @@ public class PlaceOrder extends HttpServlet {
 		
 		//save order
 		DBOrder.update(order);
+		
+		//update user credit
+		double storeCredit = user.getStoreCredit();
+		
+		if(storeCredit<=0)
+		{
+			//no credit, do nothing
+		}
+		else
+		{
+			//update credit
+			if(storeCredit >= order.getOrderTotal())
+			{
+				user.setStoreCredit(storeCredit - order.getOrderTotal()); 
+			}
+			else
+			{
+				user.setStoreCredit(0);
+			}
+			
+			//update user's credit to database:
+			DBUser.update(user);
+		}
 		
 		
 		//create a new blank (with OPEN status) order

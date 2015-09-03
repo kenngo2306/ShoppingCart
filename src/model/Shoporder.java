@@ -185,5 +185,17 @@ public class Shoporder implements Serializable {
 	{
 		return getSubtotal() + getTax();
 	}
+	
+	public double getPaymentDue()
+	{
+		if(getTotal() <= getShopuser().getStoreCredit())
+		{
+			return 0;
+		}
+		else
+		{
+			return getTotal() - getShopuser().getStoreCredit();
+		}
+	}
 
 }
