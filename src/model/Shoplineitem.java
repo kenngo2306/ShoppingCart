@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
 
 
@@ -72,5 +73,7 @@ public class Shoplineitem implements Serializable {
 	{
 		return getShopproduct().getPrice() * getQuantity();
 	}
+	
+
 
 }

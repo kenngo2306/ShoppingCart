@@ -47,9 +47,14 @@
 						<td>${item.shopproduct.productName}</td>
 						<td>${item.quantity}</td>
 						<td>${item.shopproduct.price}</td>
+						
 					</tr>
 				</c:forEach>
 			</table>
+			
+		
+			
+			
 		</div>
 	</c:forEach>
 </body>
