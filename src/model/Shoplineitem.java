@@ -23,6 +23,17 @@ public class Shoplineitem implements Serializable {
 
 	private double quantity;
 
+	@Column(name = "RETURN")
+	private String returned ="No";
+	
+	public String getReturned() {
+		return returned;
+	}
+
+	public void setReturned(String returned) {
+		this.returned = returned;
+	}
+
 	//bi-directional many-to-one association to Shopproduct
 	@ManyToOne
 	@JoinColumn(name="PRODUCT_ID")

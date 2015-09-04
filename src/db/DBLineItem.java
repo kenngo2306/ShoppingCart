@@ -26,6 +26,29 @@ public class DBLineItem
 			em.close();
 		}
 	}
+	
+	
+	public static void update(Shoplineitem lineitem) 
+	{
+		EntityManager em = DBUtil.getEmFactory().createEntityManager();
+		EntityTransaction trans = em.getTransaction();
+		trans.begin(); 
+		try 
+		{
+			em.merge(lineitem);
+			trans.commit();
+		} catch (Exception e) 
+		{
+			System.out.println(e);
+			trans.rollback();
+		} 
+		finally 
+		{
+			em.close();
+		}
+	}
+
+	
 	public static long getCount()
 	{
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
@@ -84,6 +107,33 @@ public class DBLineItem
 		}
 		return lineItems;
 	}
+	
+	
+	
+	public static List<Shoplineitem> getLineItemsByOrderID(int oid)
+	{
+		EntityManager em = DBUtil.getEmFactory().createEntityManager();
+		String queryStr = "SELECT l FROM Shoplineitem l where l.order_id = " + oid;
+		List<Shoplineitem> lineItems = null;
+		try
+		{
+			Query query = em.createQuery(queryStr);
+			lineItems =  query.getResultList();
+			System.out.println("size = " + lineItems.size());
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			em.close();
+		}
+		return lineItems;
+	}
+	
+	
+	
 //	
 	public static void insert(Shoplineitem lineItem) 
 	{

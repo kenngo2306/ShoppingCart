@@ -73,4 +73,4 @@ INSERT INTO SHOPPRODUCT VALUES (SEQ_SHOPPRODUCT.NEXTVAL,'Sweet potatoes roll',''
 
 
 
-
+alter table shoplineitem add return varchar2(5) default 'No';
