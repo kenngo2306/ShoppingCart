@@ -43,7 +43,7 @@
 					<th>Price</th>
 				</tr>
 				<c:forEach var="item" items="${order.shoplineitems}">
-					<tr>
+					<tr 	<c:if test="${item.quantity < 0}">style="color:red;"</c:if>>
 						<td>${item.shopproduct.productName}</td>
 						<td>${item.quantity}</td>
 						<td>${item.shopproduct.price}</td>

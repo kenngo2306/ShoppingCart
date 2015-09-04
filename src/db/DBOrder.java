@@ -6,6 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 
+import model.Shoplineitem;
 import model.Shoporder;
 import model.Shopuser;
 import customTools.DBUtil;
@@ -47,6 +48,59 @@ public class DBOrder
 		}
 		return orders;
 	}
+	
+	
+	public static List<Shoporder> getAllOrdersByUserID(Shopuser	user)
+	{
+		EntityManager em = DBUtil.getEmFactory().createEntityManager();
+		String queryStr = "SELECT so FROM Shoporder so where so.user = :user and so.orderStatus = :orderStatus";
+		List<Shoporder> orders = null;
+		try
+		{
+			Query query = em.createQuery(queryStr)
+					.setParameter("user", user)
+					.setParameter("orderStatus", "PLACED");
+			orders =  query.getResultList();
+			System.out.println("size = " + orders.size());
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			em.close();
+		}
+		return orders;
+	}
+	
+	public static List<Shoplineitem> getAllLineItemsByUserID(Shopuser user)
+	{
+		EntityManager em = DBUtil.getEmFactory().createEntityManager();
+		String queryStr = "SELECT l FROM Shoplineitem l where l.shoporder.shopuser = :user and l.shoporder.orderStatus = :orderStatus and l.returned = :return";
+		List<Shoplineitem> lineItems = null;
+		try
+		{
+			Query query = em.createQuery(queryStr)
+					.setParameter("user", user)
+					.setParameter("orderStatus", "PLACED")
+					.setParameter("return", "No");
+			
+			lineItems =  query.getResultList();
+			System.out.println("size = " + lineItems.size());
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			em.close();
+		}
+		return lineItems;
+	}
+	
+	
 	
 	public static void insert(Shoporder order) 
 	{

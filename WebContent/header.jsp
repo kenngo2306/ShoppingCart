@@ -21,7 +21,7 @@
 				   <c:when test="${user.userRole eq 0}">
 				      <li><a href="ViewOrders">View Orders</a></li>
 				      <li><a href="StoreCredit">Manage Credit</a></li>
-				      <li><a href="Logout">Log out</a>
+				      <li><a href="Logout">Log out</a></li>
 				   </c:when>
 						
 				   <c:otherwise>
@@ -48,6 +48,7 @@
 		      					<li><a href="AddItem.jsp">Sell a New Product</a></li>
 		      					<li role="separator" class="divider"></li>
 		      					<li><a href="ViewOrders">View Orders</a></li>
+		      					<li><a href="ReturnServlet">Return Order</a></li>
 		      					<li role="separator" class="divider"></li>
 		      					<li><a href="Logout">Log out</a>
 					          </ul>
