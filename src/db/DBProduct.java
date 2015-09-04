@@ -102,7 +102,7 @@ public class DBProduct
 	public static List<Shopproduct> getAllProducts()
 	{
 		EntityManager em = DBUtil.getEmFactory().createEntityManager();
-		String queryStr = "SELECT p FROM Shopproduct p ORDER BY p.productName";
+		String queryStr = "SELECT p FROM Shopproduct p  ORDER BY p.productName";
 		List<Shopproduct> products = null;
 		try
 		{

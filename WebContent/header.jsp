@@ -45,6 +45,8 @@
 		      					<li role="separator" class="divider"></li>
 		      					<li><a href="SellingProducts">Selling Products</a></li>
 		      					<li role="separator" class="divider"></li>
+		      					<li><a href="AddItem.jsp">Sell a New Product</a></li>
+		      					<li role="separator" class="divider"></li>
 		      					<li><a href="ViewOrders">View Orders</a></li>
 		      					<li role="separator" class="divider"></li>
 		      					<li><a href="Logout">Log out</a>

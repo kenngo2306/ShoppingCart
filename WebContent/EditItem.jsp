@@ -39,7 +39,7 @@
 					<c:out value="${errorMessage}" />
 				</div>
 			</c:if>
-			<form role="form" action="AddItem" method="Post">
+			<form role="form" action="EditProduct" method="Post">
 				<div class="form-group">
 					<label for="productName">Product Name:</label> <input type="text"
 						class="form-control" name="productName"
@@ -66,7 +66,7 @@
 
 				<div class="form-group">
 					<label for="price">Price:</label> <input type="text"
-						class="form-control" name="price" value="${product.Price}"
+						class="form-control" name="price" value="${product.price}"
 						required />
 				</div>
 
@@ -80,15 +80,14 @@
 				<div class="form-group">
 					<label for="available">Available:</label> <select
 						class="form-control" id="available" name="available">
-						<option>Select</option>
-						<option>Yes</option>
-						<option>No</option>
+						<option <c:if test="${product.available eq 'Yes'}">selected</c:if>>Yes</option>
+						<option <c:if test="${product.available eq 'No'}">selected</c:if>>No</option>
 					</select>
 				</div>
 
 				<div class="form-group">
 					<input
-						type="hidden" name="productId]"
+						type="hidden" name="productId"
 						value="${product.productId}"  />
 				</div>
 
