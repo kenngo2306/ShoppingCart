@@ -39,7 +39,7 @@
 					<c:out value="${errorMessage}" />
 				</div>
 			</c:if>
-			<form role="form" action="AddItem" method="GET">
+			<form role="form" action="AddProduct" method="POST">
 				<div class="form-group">
 					<label for="productName">Product Name:</label> <input type="text"
 						class="form-control" name="productName"  required />
@@ -76,7 +76,6 @@
 				<div class="form-group">
 					<label for="available">Available:</label> <select
 						class="form-control" id="available" name="available">
-						<option>Select</option>
 						<option>Yes</option>
 						<option>No</option>
 					</select>

@@ -49,13 +49,21 @@
 					<p>$ ${product.price}</p>
 					
 					<c:if test="${not empty user}">
-  						<a href="EditProduct?productId=${product.productId}" class="btn btn-primary">Edit</a><br>
+						<c:if test="${product.available eq 'Yes'}">
+							<a href="#" class="btn btn-success">Item is being sold</a><br>
+						</c:if>
+ 						<c:if test="${product.available eq 'No'}">
+							<a href="#" class="btn btn-danger">Item is not for Sale</a><br>
+						</c:if> 
+  						
   						<a href="./Reviews?productId=${product.productId}" class="btn btn-success">
   						Rating:
   							<c:forEach begin="1" end="${product.getAvgRating()}" var="val">
   								&#9733;
   							</c:forEach>
-  						</a>
+  						</a><br>
+  						
+  						<a href="EditProduct?productId=${product.productId}" class="btn btn-primary">Edit</a>
 					</c:if>
 				</div>
 				<div class="col-sm-5 col-offset-5">

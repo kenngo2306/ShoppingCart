@@ -69,7 +69,7 @@ public class AddProduct extends HttpServlet {
 		product.setShopuser(user);
 		
 		DBProduct.insert(product);
-		getServletContext().getRequestDispatcher("/SellingProducts.jsp");
+		getServletContext().getRequestDispatcher("/SellingProducts").forward(request, response);;
 	}
 
 }
