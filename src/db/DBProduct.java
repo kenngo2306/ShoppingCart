@@ -12,6 +12,7 @@ import javax.persistence.TypedQuery;
 
 
 import model.Shopproduct;
+import model.Shopuser;
 import customTools.DBUtil;
 
 public class DBProduct
@@ -74,6 +75,28 @@ public class DBProduct
 		{
 			em.close();
 		}
+	}
+	
+	public static List<Shopproduct> getProductByUser(Shopuser user)
+	{
+		EntityManager em = DBUtil.getEmFactory().createEntityManager();
+		String queryStr = "SELECT p FROM Shopproduct p WHERE p.shopuser = :user ORDER BY p.productName";
+		List<Shopproduct> products = null;
+		try
+		{
+			Query query = em.createQuery(queryStr).setParameter("user", user);
+			products =  query.getResultList();
+			System.out.println("size = " + products.size());
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			em.close();
+		}
+		return products;
 	}
 	
 	public static List<Shopproduct> getAllProducts()
