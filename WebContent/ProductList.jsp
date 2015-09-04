@@ -40,6 +40,16 @@
 <body>
 	<jsp:include page="./header.jsp"/>
 	
+	
+	
+  <form class="form-inline" role="form" action="AllProduct" method="post">
+    <div class="form-group">
+      <label for="search">Search</label>
+      <input type="text" class="form-control" id="search" name="search" placeholder="Enter item name">
+    </div>
+    <button type="submit" class="btn btn-default">Search</button>
+  </form>
+	
 	<c:forEach var="product" items="${products}">
 		<div class="row col-sm-6 col-sm-offset-3">
 		  <div class="item ">

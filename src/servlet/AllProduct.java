@@ -76,8 +76,24 @@ public class AllProduct extends HttpServlet {
 //			productData += "</tr>";
 //		}
 //		productData += "</table>";
-		request.setAttribute("products", products);
+		//request.setAttribute("products", products);
 //		long numItems = DBLineItem.getCount();
+		
+		
+		String search = request.getParameter("search");
+		if(search != null)
+		{
+			if(!search.isEmpty())
+			{
+				System.out.println("Searching for " + search);
+				Util<Shopproduct> db = new Util<Shopproduct>();
+				String qString = "SELECT p FROM Shopproduct p where p.productName like '%" + search +"%'";
+				products = db.getList(qString);
+			}
+		}
+		
+		
+		request.setAttribute("products", products);
 		
 		getServletContext().getRequestDispatcher("/ProductList.jsp").forward(request, response);
 	}
