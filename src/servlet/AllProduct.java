@@ -81,6 +81,7 @@ public class AllProduct extends HttpServlet {
 		
 		
 		String search = request.getParameter("search");
+		System.out.println("search = " + search);
 		if(search != null)
 		{
 			if(!search.isEmpty())

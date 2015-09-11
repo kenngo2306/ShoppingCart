@@ -15,40 +15,10 @@ import db.DBUser;
 
 public class DBOrderTest
 {
-
-//	@Test
-//	public void testGetOrder()
-//	{
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	public void testGetAllOrders()
-//	{
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	public void testInsert()
-//	{
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	public void testUpdate()
-//	{
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	public void testDelete()
-//	{
-//		fail("Not yet implemented");
-//	}
-
-//	@Test
+	@Test
 	public void testGetActiveOrderId()
 	{
+		System.out.println("test active order");
 		long userId = 5;
 		Shopuser user = DBUser.getUser(userId);
 		
@@ -58,6 +28,7 @@ public class DBOrderTest
 	@Test
 	public void testAddItem()
 	{
+		System.out.println("test add item");
 		long userId = 3;
 		Shopuser user = DBUser.getUser(userId);
 		
