@@ -88,6 +88,7 @@ public class DBUserTest
 	@Test
 	public void testLoginAndAddItemToCart()
 	{
+		//this test is used to login, add an item to the active ordeR(cart), and check if the size of the cart increase
 		System.out.println("Test login and add one line item...");
 		Shopuser user = DBUser.getUser(3);
 		System.out.println(user.getFullName());
