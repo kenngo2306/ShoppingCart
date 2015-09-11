@@ -9,55 +9,54 @@ import db.DBUser;
 
 public class DBUserTest
 {
-//	@Test
-	public void testInsert()
-	{
-		Shopuser user = new Shopuser();
-		user.setEmail("admin@infosys.com");
-		user.setFullName("admin");
-		user.setUserName("admin");
-		user.setUserRole("0");
-		user.setUserPassword("admin");
-		
-		DBUser.insert(user);
-	}
 	
 	@Test
 	public void testUpdateCredit()
 	{
+		System.out.println("test update credit");
 		Shopuser user = DBUser.getUser(2);
 		user.setStoreCredit(50);
 		
 		DBUser.update(user);
+		
+		user = DBUser.getUser(2);
+		assertTrue(user.getStoreCredit() == 50);
+		
+		user.setStoreCredit(100);
+		DBUser.update(user);
+		
+		user = DBUser.getUser(2);
+		assertFalse(user.getStoreCredit() == 50);
+		assertTrue(user.getStoreCredit() == 100);
 	}
 	
-//	@Test
+	@Test
 	public void testLogin()
 	{
+		System.out.println("test login");
 		Shopuser user = new Shopuser();
 		user.setUserName("admin");
 		user.setUserPassword("admin");
 		
-		System.out.println(DBUser.login(user));
+		long adminId = DBUser.login(user);
+		
+		user = DBUser.getUser(adminId);
+		
+		assertTrue(user.getUserName().equals("admin"));
 	}
 	
-//	@Test
+	@Test
 	public void testHasActiveOrder()
 	{
+		System.out.println("test has active order");
 		Shopuser user = DBUser.getUser(5);
 		assertTrue(user.hasActiveOrder());
 	}
 	
-//	@Test
-	public void testHasNoReview()
-	{
-		assertFalse(DBUser.hasNoReview(8, 3));
-		assertTrue(DBUser.hasNoReview(8, 2));
-	}
-	
-//	@Test
+	@Test
 	public void testIsAvailable()
 	{
+		System.out.println("test is available");
 		Shopuser user = new Shopuser();
 		
 		user.setUserName("admin");
@@ -81,30 +80,5 @@ public class DBUserTest
 		assertFalse(DBUser.isAvailable(user));
 	}
 	
-//	@Test
-//	public void testGetUser()
-//	{
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	public void testGetAllUsers()
-//	{
-//		fail("Not yet implemented");
-//	}
-//
-//
-//
-//	@Test
-//	public void testUpdate()
-//	{
-//		fail("Not yet implemented");
-//	}
-//
-//	@Test
-//	public void testDelete()
-//	{
-//		fail("Not yet implemented");
-//	}
 
 }
